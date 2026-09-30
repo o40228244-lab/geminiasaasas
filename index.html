@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics Test Result</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+
+<div class="spectrum-bar" aria-hidden="true"></div>
+
+<div class="container">
+
+  <div id="printArea">
+
+    <div class="pdfHeader">
+      <p class="eyebrow">Laboratory Grade Sheet</p>
+      <h1>Physics Test Result</h1>
+      <h2 id="pdfClass"></h2>
+    </div>
+
+    <div class="selectWrap">
+      <select id="classSelect" onchange="loadClass()">
+        <option value="">Select Class</option>
+        <option>9th Boys</option>
+        <option>9th Girls</option>
+        <option>10th Boys</option>
+        <option>10th Girls</option>
+      </select>
+    </div>
+
+    <div id="area" class="area">
+
+      <div class="buttons">
+        <button class="btn btn-primary" onclick="addTest()">
+          <span class="icon">＋</span> Add Test
+        </button>
+        <button class="btn btn-primary" onclick="addStudent()">
+          <span class="icon">＋</span> Add Student
+        </button>
+        <button class="btn btn-ghost" onclick="manualSave()">
+          <span class="icon">✓</span> Save
+        </button>
+        <button class="btn btn-outline" onclick="downloadPDF()">
+          <span class="icon">⇩</span> PDF
+        </button>
+        <button class="btn btn-outline" onclick="downloadPNG()">
+          <span class="icon">⇩</span> PNG
+        </button>
+      </div>
+
+      <div class="backupBar">
+        <button class="btn btn-mini" onclick="exportBackup()">⇪ Backup All Data</button>
+        <button class="btn btn-mini" onclick="triggerImport()">⇩ Restore Backup</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importBackup(event)">
+        <span class="backupHint">Move your data to another phone / PC using Backup &amp; Restore.</span>
+      </div>
+
+      <div class="tableScroll">
+        <table id="resultTable">
+          <thead>
+            <tr id="head">
+              <th>Sr#</th>
+              <th>Student Name</th>
+            </tr>
+          </thead>
+          <tbody id="body"></tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <div id="emptyState" class="emptyState">
+      <div class="prism">📐</div>
+      <p>Select a class above to open its grade sheet.</p>
+    </div>
+
+  </div>
+
+  <footer>Developer: Muhammad Junaid Latif</footer>
+
+</div>
+
+<!-- Modal -->
+<div id="modalOverlay" class="modal-overlay hidden" onclick="if(event.target===this) hideModal()">
+  <div class="modal-box" id="modalBox"></div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
